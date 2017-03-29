@@ -1,7 +1,7 @@
 /**
  * Numeric directive.
  * Version: 1.0.0
- * 
+ *
  * Numeric only input. Limits input to:
  * - max value: maximum input value. Default undefined (no max).
  * - min value: minimum input value. Default undefined (no min).
@@ -22,7 +22,7 @@
         // Usage:
         //     <input type="text" decimals="3" min="-20" max="40" formatting="false" ></input>
         // Creates:
-        // 
+        //
         var directive = {
             link: link,
             require: 'ngModel',
@@ -76,7 +76,7 @@
             }
 
             function onMinChanged(value) {
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     min = parseFloat(value);
                     lastValidValue = minValidator(ngModelCtrl.$modelValue);
                     ngModelCtrl.$setViewValue(formatPrecision(lastValidValue));
@@ -85,7 +85,7 @@
             }
 
             function onMaxChanged(value) {
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     max = parseFloat(value);
                     maxInputLength = calculateMaxLength(max);
                     lastValidValue = maxValidator(ngModelCtrl.$modelValue);
@@ -95,7 +95,7 @@
             }
 
             function onDecimalsChanged(value) {
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     decimals = parseFloat(value);
                     maxInputLength = calculateMaxLength(max);
                     if (lastValidValue !== undefined) {
@@ -106,7 +106,7 @@
             }
 
             function onFormattingChanged(value) {
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     formatting = (value !== false);
                     ngModelCtrl.$setViewValue(formatPrecision(lastValidValue));
                     ngModelCtrl.$render();
@@ -114,13 +114,13 @@
             }
 
             function onLimitMinChanged(value) {
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     limitMin = (value == "true");
                 }
             }
 
             function onLimitMaxChanged(value) {
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     limitMax = (value == "true");
                 }
             }
@@ -194,7 +194,7 @@
                 if (empty) {
                     lastValidValue = '';
                     //ngModelCtrl.$modelValue = undefined;
-                } 
+                }
                 else {
                     if (regex.test(value) && (value.length <= maxInputLength)) {
                         if ((value > max) && limitMax) {
@@ -223,12 +223,12 @@
              */
             function calculateMaxLength(value) {
                 var length = 16;
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     length = Math.floor(value).toString().length;
                 }
                 if (decimals > 0) {
                     // Add extra length for the decimals plus one for the decimal separator.
-                    length += decimals + 1; 
+                    length += decimals + 1;
                 }
                 if (min < 0) {
                     // Add extra length for the - sign.
@@ -281,21 +281,21 @@
              */
             function onBlur() {
                 var value = ngModelCtrl.$modelValue;
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     // Format the model value.
                     ngModelCtrl.$viewValue = formatPrecision(value);
                     ngModelCtrl.$render();
                 }
             }
 
-            
+
             /**
              * Function for handeling the focus (enter) event on the control.
              * On focus show the value without the group separators.
              */
             function onFocus() {
                 var value = ngModelCtrl.$modelValue;
-                if (!angular.isUndefined(value)) {
+                if (!angular.isUndefined(value) && value !== null) {
                     ngModelCtrl.$viewValue = value.toString().replace(".", decimalSeparator);
                     ngModelCtrl.$render();
                 }
